@@ -1,0 +1,22 @@
+{% comment %} navbar.html {% endcomment %}
+<nav class="navbar">
+    <div class="container">
+        <div class="nav-left">
+            <div class="nav-logo">Employee Management</div>
+            <div class="home">
+                <a href="{% url 'home' %}">Home</a>
+            </div>
+            <div class="dropdown">
+                
+                <button class="dropbtn">Menu ▼</button>
+                <div class="dropdown-content">
+                    <a href="{% url 'add_employee' %}">➕ Add Employee</a>
+                    <a href="{% url 'mark_attendance' %}">📅 Mark Attendance</a>
+                    <a href="{% url 'add_bonus' %}">💰 Add Bonus</a>
+                    <a href="{% url 'process_payroll' %}">📄 Process Payroll</a>
+                    <a href="{% url 'employee_list' %}">📄 Employee List</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>

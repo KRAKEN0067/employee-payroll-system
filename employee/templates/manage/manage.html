@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/manage.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="manage-container">
+  <h2 class="manage-title">Manage System</h2>
+  <div class="manage-grid">
+    <a href="{% url 'add_employee' %}" class="manage-card">👨‍💼 Add Employee</a>
+    <a href="{% url 'add_department' %}" class="manage-card">🏢 Add Department</a>
+    <a href="{% url 'mark_attendance' %}" class="manage-card">🕒 Mark Attendance</a>
+    <a href="{% url 'add_bonus' %}" class="manage-card">💸 Add Bonus</a>
+    <a href="{% url 'process_payroll' %}" class="manage-card">📊 Process Payroll</a>
+    <a href="{% url 'employee_list' %}" class="manage-card">📋 Employee List</a>
+  </div>
+</div>
+{% endblock %}

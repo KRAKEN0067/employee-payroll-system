@@ -1,0 +1,17 @@
+{% extends "base.html" %} 
+{% load static %} 
+{% block head %} 
+
+<link rel="stylesheet" href="{% static "css/form.css" %}"> 
+{% endblock %} 
+{% block content %}
+
+<div class="form-contianer">
+  <h2>Process Payroll</h2>
+  <form method="POST">
+    {% csrf_token %} {{ form.as_p }}
+    <button type="submit" class="button is-primary">Save</button>
+  </form>
+</div>
+
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<header class="home-hero">
+  <div class="hero-text">
+    <h1>Welcome to Your HR & Payroll System</h1>
+    <p>Manage employees, track attendance, process payrolls, and more — all in one place.</p>
+    <a href="{% url 'manage' %}" class="btn-primary">Go to Dashboard</a>
+  </div>
+</header>
+
+<section class="features-section">
+  <h2>Core Features</h2>
+  <div class="features-grid">
+    <div class="feature-card">
+      <h3>👥 Employee Management</h3>
+      <p>Add, update, and view detailed employee profiles with ease.</p>
+    </div>
+    <div class="feature-card">
+      <h3>🕒 Attendance Tracking</h3>
+      <p>Track employee attendance and working hours seamlessly.</p>
+    </div>
+    <div class="feature-card">
+      <h3>💰 Payroll Processing</h3>
+      <p>Generate accurate salaries, bonuses, and deductions every month.</p>
+    </div>
+    <div class="feature-card">
+      <h3>📈 Reports</h3>
+      <p>Visual insights into employee performance, salaries, and attendance.</p>
+    </div>
+  </div>
+</section>
+
+<footer class="home-footer">
+  <p>&copy; 2025 HR System. All rights reserved.</p>
+</footer>
+
+{% endblock %}

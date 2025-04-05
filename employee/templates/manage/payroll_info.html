@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/payroll.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="payroll-card">
+  <h2>Payroll Information</h2>
+  <h3>{{ employee.first_name }} {{ employee.last_name }} (ID: {{ employee.employee_id }})</h3>
+  <p><strong>Department:</strong> {{ employee.department.department_name }}</p>
+  <p><strong>Role:</strong> {{ employee.role.role_name }}</p>
+  <hr>
+
+  {% if payrolls %}
+    {% for payroll in payrolls %}
+      <div class="payroll-info">
+        <p><strong>Month:</strong> {{ payroll.salary_month }}</p>
+        <p><strong>Gross Salary:</strong> ₹{{ payroll.gross_salary }}</p>
+        <p><strong>Deductions:</strong> ₹{{ payroll.deductions }}</p>
+        <p><strong>Net Salary:</strong> ₹{{ payroll.net_salary }}</p>
+        <p><strong>Status:</strong> 
+          <span class="status {{ payroll.payment_status|lower }}">{{ payroll.payment_status }}</span>
+        </p>
+        <hr>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p>No payroll records available.</p>
+  {% endif %}
+</div>
+{% endblock %}
