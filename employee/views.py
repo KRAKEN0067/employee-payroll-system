@@ -1,5 +1,5 @@
 from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
-from .forms import EmployeeForm, AttendanceForm, BonusForm, PayrollForm, DepartmentForm
+from .forms import EmployeeForm, AttendanceForm, BonusForm, PayrollForm, DepartmentForm, RoleForm
 from .models import *
 def home(request):
     return render(request,'home.html')
@@ -10,13 +10,12 @@ def manage(request):
 def about(request):
     return render(request, 'about.html')
 
-
-
 def service(request):
     return render(request, 'service.html')
 
 def contacts(request):
     return render(request, 'contacts.html')
+
 
 def employee_list(request):
     employees = Employee.objects.all()
@@ -56,6 +55,17 @@ def add_employee(request):
         form = EmployeeForm()
 
     return render(request, 'manage/add_employee.html', {'form': form})
+
+def add_role(request):
+    form = None
+    if request.method == "POST":
+        if form.is_valid():
+            form.save()
+            return redirect('add_role')
+    else:
+        form = RoleForm()
+    
+    return render(request, 'manage/add_role.html', {'form':form})
 
 def add_department(request):
     form = None

@@ -1,5 +1,5 @@
 from django import forms
-from .models import Employee, Attendance, Bonus, Payroll, Department
+from .models import Employee, Attendance, Bonus, Payroll, Department, Role
 from datetime import date
 
 class EmployeeForm(forms.ModelForm):
@@ -32,3 +32,8 @@ class DepartmentForm(forms.ModelForm):
     class Meta:
         model = Department
         fields ='__all__'
+
+class RoleForm(forms.ModelForm):
+    class Meta:
+        model =  Role
+        fields = '__all__'
