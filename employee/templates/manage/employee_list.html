@@ -9,8 +9,44 @@
 
 <div class="employee-container">
     <div class="search-bar">
-        <input type="search" placeholder="Search employees...">
+        <form method="GET">
+            <input 
+                type="search" 
+                name="q" 
+                placeholder="Search employees..." 
+                value="{{ request.GET.q }}"
+            >
+    
+            <select name="department">
+                <option value="">All Departments</option>
+                {% for dept in departments %}
+                    <option value="{{ dept.pk }}" {% if request.GET.department == dept.pk|stringformat:"s" %}selected{% endif %}>
+                        {{ dept.department_name }}
+                    </option>
+                {% endfor %}
+            </select>
+            
+            <select name="role">
+                <option value="">All Roles</option>
+                {% for r in roles %}
+                    <option value="{{ r.pk }}" {% if request.GET.role == r.pk|stringformat:"s" %}selected{% endif %}>
+                        {{ r.role_name }}
+                    </option>
+                {% endfor %}
+            </select>
+            
+    
+            <select name="status">
+                <option value="">All Status</option>
+                <option value="Active" {% if request.GET.status == "Active" %}selected{% endif %}>Active</option>
+                <option value="Inactive" {% if request.GET.status == "Inactive" %}selected{% endif %}>Inactive</option>
+            </select>
+    
+            <button type="submit">Search</button>
+        </form>
     </div>
+    
+    
 
     <div class="employee-table">
         <table>

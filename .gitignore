@@ -29,6 +29,3 @@ venv.bak/
 # PyCharm
 .idea/
 
-# Migrations (optional – include only if you're auto-generating them)
-**/migrations/*.pyc
-**/migrations/__pycache__/

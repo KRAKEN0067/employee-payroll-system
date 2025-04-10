@@ -1,6 +1,7 @@
 from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
 from .forms import EmployeeForm, AttendanceForm, BonusForm, PayrollForm, DepartmentForm, RoleForm
 from .models import *
+from django.db.models import Q
 def home(request):
     return render(request,'home.html')
 
@@ -18,8 +19,48 @@ def contacts(request):
 
 
 def employee_list(request):
+    query = request.GET.get('q', '')
+    department = request.GET.get('department')
+    role = request.GET.get('role')
+    status = request.GET.get('status')
+
     employees = Employee.objects.all()
-    return render(request, 'manage/employee_list.html',{'employees':employees})
+
+    if query:
+        employees = employees.filter(
+            Q(first_name__icontains=query) |
+            Q(last_name__icontains=query) |
+            Q(email__icontains=query) |
+            Q(phone__icontains=query) |
+            Q(department__department_name__icontains=query) |
+            Q(role__role_name__icontains=query)
+        )
+
+    if department:
+        try:
+            employees = employees.filter(department__pk=int(department))
+        except ValueError:
+            pass  # silently ignore invalid filter
+
+    if role:
+        try:
+            employees = employees.filter(role__pk=int(role))
+        except ValueError:
+            pass
+
+    if status:
+        employees = employees.filter(status=status)
+
+    departments = Department.objects.all()
+    roles = Role.objects.all()
+
+    context = {
+        'employees': employees,
+        'departments': departments,
+        'roles': roles,
+    }
+
+    return render(request, 'manage/employee_list.html', context)
 
 
 
