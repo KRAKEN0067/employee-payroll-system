@@ -1,5 +1,5 @@
 from django import forms
-from .models import Employee, Attendance, Bonus, Payroll, Department, Role
+from .models import Employee, Attendance, Bonus, Payroll, Department, Role, Deductions
 from datetime import date
 
 class EmployeeForm(forms.ModelForm):
@@ -9,19 +9,19 @@ class EmployeeForm(forms.ModelForm):
         widgets = {
             'hire_date': forms.DateInput(attrs={'type': 'date'}),
         }
-class AttendanceForm(forms.ModelForm):
-    date = forms.DateField(
-        initial=date.today,
-        widget=forms.DateInput(attrs={'type':'date'})
-    )
-    class Meta:
-        model = Attendance
-        fields = ['employee', 'date', 'status', 'work_hours', 'overtime_hours']
+
 
 class BonusForm(forms.ModelForm):
     class Meta:
         model = Bonus
         fields = ['employee', 'bonus_amount', 'bonus_date', 'bonus_reason']
+
+class DeductionsForm(forms.ModelForm):
+    class Meta:
+        model = Deductions
+        fields = ['tax','provident_fund','other_deductions','total_deductions']
+
+
 
 class PayrollForm(forms.ModelForm):
     class Meta:
@@ -37,3 +37,12 @@ class RoleForm(forms.ModelForm):
     class Meta:
         model =  Role
         fields = '__all__'
+
+class AttendanceForm(forms.ModelForm):
+    date = forms.DateField(
+        initial=date.today,
+        widget=forms.DateInput(attrs={'type':'date'})
+    )
+    class Meta:
+        model = Attendance
+        fields = ['employee', 'date', 'status', 'work_hours', 'overtime_hours']

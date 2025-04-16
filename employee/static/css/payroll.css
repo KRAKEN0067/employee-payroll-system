@@ -1,48 +1,42 @@
 .payroll-card {
-    max-width: 700px;
-    margin: 40px auto;
-    padding: 30px;
-    background-color: #191a24;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-    color: #ffffff;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  }
-  
-  .payroll-card h2 {
-    text-align: center;
-    margin-bottom: 25px;
-    font-size: 28px;
-    color: #ffffff;
-  }
-  
-  .payroll-info p {
-    margin: 12px 0;
-    font-size: 16px;
-    display: flex;
-    justify-content: space-between;
-    border-bottom: 1px solid #444;
-    padding-bottom: 8px;
-  }
-  
-  .payroll-info strong {
-    color: #bbb;
-    flex-basis: 40%;
-  }
-  
-  .status {
-    font-weight: bold;
-    padding: 5px 10px;
-    border-radius: 5px;
-  }
-  
-  .status.pending {
-    background-color: #ffc107;
-    color: #000;
-  }
-  
-  .status.completed {
-    background-color: #28a745;
-    color: #fff;
-  }
-  
+  background: #fff;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+  max-width: 800px;
+  margin: 2rem auto;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.employee-header {
+  background: #f9f9f9;
+  padding: 1rem;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+}
+
+.payroll-info {
+  margin-top: 1.5rem;
+}
+
+.salary-section, .salary-breakdown, .deduction-breakdown, .bonus-section {
+  margin-top: 1rem;
+  background: #f4f6f8;
+  padding: 1rem;
+  border-radius: 12px;
+}
+
+.status {
+  font-weight: bold;
+  padding: 4px 8px;
+  border-radius: 6px;
+  color: white;
+}
+
+.status.pending {
+  background-color: #eab308;
+}
+
+.status.completed {
+  background-color: #16a34a;
+}

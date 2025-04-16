@@ -170,3 +170,60 @@ body {
   background-color: #1e1e2f;
   color: #f1f1f1;
 }
+
+.employee-card {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.07);
+  transition: transform 0.2s;
+  border-left: 6px solid #2196f3;
+}
+
+.employee-card h2 {
+  color: #2c3e50;
+  margin-bottom: 10px;
+}
+
+.employee-card p {
+  margin: 6px 0;
+  font-size: 15px;
+  color: #555;
+}
+
+.attendance-summary ul {
+  padding-left: 20px;
+  margin: 8px 0 16px;
+}
+
+.financial-stats {
+  border-top: 1px solid #ddd;
+  margin-top: 16px;
+  padding-top: 10px;
+}
+
+.status-active {
+  color: #4caf50;
+  font-weight: bold;
+}
+
+.salary-amount {
+  color: #2e7d32;
+  font-weight: bold;
+}
+
+.bonus-amount {
+  color: #ff9800;
+  font-weight: bold;
+}
+.chart-container {
+  text-align: center;
+  margin-top: 30px;
+}
+
+#bonusChart {
+  max-width: 450px; /* Make it bigger */
+  max-height: 350px;
+  margin: auto;
+  display: block;
+}

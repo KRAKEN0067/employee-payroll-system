@@ -1,7 +1,7 @@
 from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
-from .forms import EmployeeForm, AttendanceForm, BonusForm, PayrollForm, DepartmentForm, RoleForm
+from .forms import EmployeeForm, AttendanceForm, BonusForm, PayrollForm, DepartmentForm, RoleForm, DeductionsForm
 from .models import *
-from django.db.models import Q
+from django.db.models import Q,Sum,Count
 def home(request):
     return render(request,'home.html')
 
@@ -144,6 +144,7 @@ def add_bonus(request):
 
     return render(request, 'manage/add_bonus.html', {'form': form})
 
+
 def process_payroll(request):
     form = None
     if request.method == "POST":
@@ -157,6 +158,72 @@ def process_payroll(request):
     return render(request, 'manage/process_payroll.html', {'form': form})
 
 def payroll_info(request, employee_id):
-    employee = get_object_or_404(Employee, employee_id=employee_id)
-    payrolls = Payroll.objects.filter(employee=employee).order_by('-salary_month')
-    return render(request, 'manage/payroll_info.html', {'employee':employee, 'payrolls':payrolls})
+    employee = get_object_or_404(Employee, pk=employee_id)
+    payrolls = Payroll.objects.filter(employee=employee)
+    salary_structure = SalaryStructure.objects.filter(employee=employee).first()
+    deductions = Deductions.objects.filter(employee=employee).first()
+    bonuses = Bonus.objects.filter(employee=employee)
+
+    return render(request, 'manage/payroll_info.html', {
+        'employee': employee,
+        'payrolls': payrolls,
+        'salary_structure': salary_structure,
+        'deductions': deductions,
+        'bonuses': bonuses,
+    })
+
+def employee_stats_view(request):
+    employees = Employee.objects.all()
+    employee_data = []
+
+    attendance_chart_data = []
+    salary_chart_data = []
+    bonus_chart_data = []
+
+    for emp in employees:
+        attendance = Attendance.objects.filter(employee=emp)
+        attendance_summary = {
+            'present': attendance.filter(status='Present').count(),
+            'absent': attendance.filter(status='Absent').count(),
+            'on_leave': attendance.filter(status='On Leave').count(),
+        }
+
+        latest_payroll = Payroll.objects.filter(employee=emp).order_by('-payroll_id').first()
+        net_salary = latest_payroll.net_salary if latest_payroll else 0
+        total_bonus = Bonus.objects.filter(employee=emp).aggregate(total=Sum('bonus_amount'))['total'] or 0
+
+        employee_data.append({
+            'employee': emp,
+            'attendance_summary': attendance_summary,
+            'net_salary': net_salary,
+            'latest_pay_month': latest_payroll.salary_month if latest_payroll else 'N/A',
+            'bonus_total': total_bonus,
+        })
+
+        # Graph data
+        attendance_chart_data.append({
+            'name': f'{emp.first_name} {emp.last_name}',
+            'present': attendance_summary['present'],
+            'absent': attendance_summary['absent'],
+            'on_leave': attendance_summary['on_leave'],
+        })
+        salary_chart_data.append({
+            'name': f'{emp.first_name} {emp.last_name}',
+            'salary': float(net_salary),
+        })
+        bonus_chart_data.append({
+            'name': f'{emp.first_name} {emp.last_name}',
+            'bonus': float(total_bonus),
+        })
+
+    # Sort salary chart to get top 5 earners
+    top_5_salaries = sorted(salary_chart_data, key=lambda x: x['salary'], reverse=True)[:5]
+
+    context = {
+        'employee_data': employee_data,
+        'attendance_chart_data': attendance_chart_data,
+        'top_5_salaries': top_5_salaries,
+        'bonus_chart_data': bonus_chart_data,
+    }
+
+    return render(request, 'manage/employee_stats.html', context)

@@ -1,31 +1,41 @@
-# Byte-compiled / optimized / DLL files
+# Python bytecode files
+*.pyc
+*.pyo
+*.pyd
 __pycache__/
-*.py[cod]
-*$py.class
 
-# Django stuff:
+# Django specific
 *.log
 *.pot
-*.pyc
+*.py[cod]
 db.sqlite3
+/static/
 media/
-staticfiles/
-.env
 
-# Virtual environment:
+# Virtual environment
 venv/
-env/
-.venv/
-ENV/
-env.bak/
-venv.bak/
+.env/
+
+# Coverage reports
+.coverage
+nosetests.xml
+coverage.xml
+*.cover
+
+# MySQL/MariaDB database files
+*.db
+
+# JetBrains IDEs
+.idea/
 
 # VS Code
 .vscode/
 
-# macOS
+# macOS Finder attributes
 .DS_Store
 
-# PyCharm
-.idea/
+# Windows thumbnails
+Thumbs.db
 
+# Python environment files
+Pipfile.lock

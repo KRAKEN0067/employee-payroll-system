@@ -7,22 +7,58 @@
 
 {% block content %}
 <div class="payroll-card">
-  <h2>Payroll Information</h2>
-  <h3>{{ employee.first_name }} {{ employee.last_name }} (ID: {{ employee.employee_id }})</h3>
-  <p><strong>Department:</strong> {{ employee.department.department_name }}</p>
-  <p><strong>Role:</strong> {{ employee.role.role_name }}</p>
+  <h2>Payroll Details</h2>
+  <div class="employee-header">
+    <h3>{{ employee.first_name }} {{ employee.last_name }} (ID: {{ employee.employee_id }})</h3>
+    <p><strong>Department:</strong> {{ employee.department.department_name }}</p>
+    <p><strong>Role:</strong> {{ employee.role.role_name }}</p>
+    <p><strong>Status:</strong> {{ employee.status }}</p>
+  </div>
   <hr>
 
   {% if payrolls %}
     {% for payroll in payrolls %}
       <div class="payroll-info">
-        <p><strong>Month:</strong> {{ payroll.salary_month }}</p>
-        <p><strong>Gross Salary:</strong> ₹{{ payroll.gross_salary }}</p>
-        <p><strong>Deductions:</strong> ₹{{ payroll.deductions }}</p>
-        <p><strong>Net Salary:</strong> ₹{{ payroll.net_salary }}</p>
-        <p><strong>Status:</strong> 
-          <span class="status {{ payroll.payment_status|lower }}">{{ payroll.payment_status }}</span>
-        </p>
+        <h4>{{ payroll.salary_month }}</h4>
+        <div class="salary-section">
+          <p><strong>Gross Salary:</strong> ₹{{ payroll.gross_salary }}</p>
+          <p><strong>Net Salary:</strong> ₹{{ payroll.net_salary }}</p>
+          <p><strong>Deductions:</strong> ₹{{ payroll.deductions }}</p>
+          <p><strong>Payment Status:</strong> 
+            <span class="status {{ payroll.payment_status|lower }}">{{ payroll.payment_status }}</span>
+          </p>
+        </div>
+
+        {% if salary_structure %}
+        <div class="salary-breakdown">
+          <h5>Salary Structure</h5>
+          <p><strong>Basic:</strong> ₹{{ salary_structure.basic_salary }}</p>
+          <p><strong>HRA:</strong> ₹{{ salary_structure.hra }}</p>
+          <p><strong>Medical:</strong> ₹{{ salary_structure.medical_allowance }}</p>
+          <p><strong>Travel:</strong> ₹{{ salary_structure.travel_allowance }}</p>
+        </div>
+        {% endif %}
+
+        {% if deductions %}
+        <div class="deduction-breakdown">
+          <h5>Deductions Breakdown</h5>
+          <p><strong>Tax:</strong> ₹{{ deductions.tax }}</p>
+          <p><strong>Provident Fund:</strong> ₹{{ deductions.provident_fund }}</p>
+          <p><strong>Others:</strong> ₹{{ deductions.other_deductions }}</p>
+        </div>
+        {% endif %}
+
+        {% if bonuses %}
+        <div class="bonus-section">
+          <h5>Bonuses</h5>
+          {% for bonus in bonuses %}
+            <p>+ ₹{{ bonus.bonus_amount }} ({{ bonus.bonus_date }}): {{ bonus.bonus_reason }}</p>
+          {% empty %}
+            <p>No bonuses for this month.</p>
+          {% endfor %}
+        </div>
+        {% endif %}
+
         <hr>
       </div>
     {% endfor %}
