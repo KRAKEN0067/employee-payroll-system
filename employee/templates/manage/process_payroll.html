@@ -1,17 +1,16 @@
-{% extends "base.html" %} 
-{% load static %} 
-{% block head %} 
+{% extends "manage/manage.html" %}
+{% load static %}
 
-<link rel="stylesheet" href="{% static "css/form.css" %}"> 
-{% endblock %} 
-{% block content %}
+{% block head %}
+    {{ block.super }}
+  <link rel="stylesheet" href="{% static 'css/form.css' %}">
+{% endblock %}
 
-<div class="form-contianer">
-  <h2>Process Payroll</h2>
+{% block main_content %}
+  <h2>Employee Payroll</h2>
   <form method="POST">
-    {% csrf_token %} {{ form.as_p }}
-    <button type="submit" class="button is-primary">Save</button>
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="button is-primary">Save</button>
   </form>
-</div>
-
 {% endblock %}

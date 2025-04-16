@@ -1,22 +1,171 @@
+/* Global Styles */
 body {
-  background-color: black;
-  color: white;
+  background: linear-gradient(135deg, #121212, #2c2c2c);  /* Cool gradient background */
+  color: #f5f5f5;
   margin: 40px;
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 16px;
   line-height: 1.6;
   text-rendering: optimizeLegibility;
   min-width: 200px;
+  transition: background 0.5s ease-in-out;
 }
 
-h2 {
-  color: rgb(255, 255, 255);
+/* Headings */
+h1, h2 {
+  color: #ffffff;
   text-align: center;
+  font-weight: 600;
+  text-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Soft shadow effect */
+  letter-spacing: 1px;
 }
 
 h1 {
-  color: #333;
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: #00bcd4;  /* Neon light blue for the main heading */
 }
+
+h2 {
+  font-size: 1.8rem;
+  margin-bottom: 15px;
+  color: #8bc34a; /* Neon green */
+}
+
+/* Links */
+a {
+  color: #00bcd4; /* Neon light blue */
+  text-decoration: none;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+a:hover {
+  color: #8bc34a;  /* Change to neon green on hover */
+  text-shadow: 0 0 10px rgba(139, 195, 74, 1);
+}
+
+/* Buttons */
+button {
+  background-color: #4caf50; /* Neon green background */
+  color: #fff;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+button:hover {
+  background-color: #8bc34a; /* Neon green hover effect */
+  transform: scale(1.05);
+}
+
+/* Cards / Containers */
+.card, .payroll-card, .employee-card {
+  background-color: #1e1e2f;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin-bottom: 20px;
+}
+
+.card:hover, .payroll-card:hover, .employee-card:hover {
+  transform: translateY(-5px); /* Hover effect */
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
+}
+
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 30px 0;
+}
+
+th, td {
+  padding: 12px;
+  text-align: left;
+  color: #f1f1f1;
+  border-bottom: 1px solid #333;
+}
+
+th {
+  background-color: #333;
+}
+
+tr:nth-child(even) {
+  background-color: #2c2c3c;
+}
+
+/* Form Inputs */
+input, select, textarea {
+  background-color: #2c2c3c;
+  color: #f1f1f1;
+  border: none;
+  padding: 12px;
+  font-size: 1rem;
+  border-radius: 6px;
+  width: 100%;
+  margin-bottom: 15px;
+  transition: background-color 0.3s ease;
+}
+
+input:focus, select:focus, textarea:focus {
+  background-color: #444c5c;
+  outline: none;
+}
+
+/* Footer */
+footer {
+  background-color: #121212;
+  color: #8bc34a;
+  text-align: center;
+  padding: 15px;
+  margin-top: 30px;
+  font-size: 1rem;
+  letter-spacing: 0.5px;
+}
+
+/* Adding a cool hover effect for links in footer */
+footer a {
+  color: #8bc34a;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+footer a:hover {
+  color: #00bcd4;
+}
+
+/* Media Queries for responsiveness */
+@media (max-width: 768px) {
+  body {
+    margin: 20px;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  button {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .card, .payroll-card, .employee-card {
+    padding: 20px;
+  }
+}
+
+
+
+
 
 /*delete employee*/
 .delete_employee {

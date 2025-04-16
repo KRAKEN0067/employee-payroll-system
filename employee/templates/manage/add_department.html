@@ -1,16 +1,16 @@
-{% extends "base.html" %} 
+{% extends "manage/manage.html" %}
 {% load static %}
+
 {% block head %}
-<link rel="stylesheet" href="{% static "css/form.css" %}">
+    {{ block.super }}
+  <link rel="stylesheet" href="{% static 'css/form.css' %}">
 {% endblock %}
-{% block content %}
 
-
-<h2>Add Department</h2>
-<form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="button is-primary">Save</button>
-</form>
-
+{% block main_content %}
+  <h2>Add Department</h2>
+  <form method="POST">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="button is-primary">Save</button>
+  </form>
 {% endblock %}

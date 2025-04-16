@@ -8,14 +8,7 @@ def home(request):
 def manage(request):
     return render(request, 'manage/manage.html')
 
-def about(request):
-    return render(request, 'about.html')
 
-def service(request):
-    return render(request, 'service.html')
-
-def contacts(request):
-    return render(request, 'contacts.html')
 
 
 def employee_list(request):
@@ -126,7 +119,7 @@ def mark_attendance(request):
         form = AttendanceForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('home')
+            return redirect('mark_attendance')
     else:
         form = AttendanceForm()
 
@@ -138,7 +131,7 @@ def add_bonus(request):
         form = BonusForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('home')
+            return redirect('add_bonus')
     else:
         form = BonusForm()
 
@@ -151,7 +144,7 @@ def process_payroll(request):
         form = PayrollForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('home')
+            return redirect('process_payroll')
     else:
         form = PayrollForm()
 
@@ -172,6 +165,11 @@ def payroll_info(request, employee_id):
         'bonuses': bonuses,
     })
 
+import matplotlib.pyplot as plt
+import io
+import base64
+
+
 def employee_stats_view(request):
     employees = Employee.objects.all()
     employee_data = []
@@ -180,6 +178,7 @@ def employee_stats_view(request):
     salary_chart_data = []
     bonus_chart_data = []
 
+    # Prepare attendance data and other statistics
     for emp in employees:
         attendance = Attendance.objects.filter(employee=emp)
         attendance_summary = {
@@ -219,11 +218,37 @@ def employee_stats_view(request):
     # Sort salary chart to get top 5 earners
     top_5_salaries = sorted(salary_chart_data, key=lambda x: x['salary'], reverse=True)[:5]
 
+    # Create Matplotlib Attendance Chart
+    fig, ax = plt.subplots(figsize=(10, 6))
+    labels = [f'{emp["name"]}' for emp in attendance_chart_data]
+    present = [emp['present'] for emp in attendance_chart_data]
+    absent = [emp['absent'] for emp in attendance_chart_data]
+    on_leave = [emp['on_leave'] for emp in attendance_chart_data]
+
+    ax.bar(labels, present, label='Present', color='#4caf50')
+    ax.bar(labels, absent, label='Absent', color='#f44336', bottom=present)
+    ax.bar(labels, on_leave, label='On Leave', color='#ffc107', bottom=[i+j for i,j in zip(present, absent)])
+
+    ax.set_xlabel('Employee')
+    ax.set_ylabel('Days')
+    ax.set_title('Employee Attendance Summary')
+    ax.legend()
+
+    # Convert Matplotlib plot to PNG image and then to base64
+    img_buf = io.BytesIO()
+    plt.tight_layout()
+    plt.savefig(img_buf, format='png')
+    img_buf.seek(0)
+    img_str = base64.b64encode(img_buf.getvalue()).decode('utf-8')
+    plt.close(fig)
+
+    # Pass chart data and context to the template
     context = {
         'employee_data': employee_data,
         'attendance_chart_data': attendance_chart_data,
         'top_5_salaries': top_5_salaries,
         'bonus_chart_data': bonus_chart_data,
+        'attendance_chart_image': img_str,  # Base64 image for embedding
     }
 
     return render(request, 'manage/employee_stats.html', context)

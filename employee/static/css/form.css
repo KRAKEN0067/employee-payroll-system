@@ -1,33 +1,42 @@
+/* Main container for the form */
 .form-container {
   display: flex;
   flex-direction: column;
-  align-items: center; /* this centers children horizontally */
+  align-items: center; /* centers children horizontally */
   justify-content: center;
   min-height: 80vh;
+  background-color: #f4f4f4; /* Light background for contrast */
 }
-
+h2{
+  color: #333;
+  text-align: center;
+}
+/* Style the form container */
 form {
   max-width: 600px;
   margin: 20px auto;
   padding: 20px;
   border: 1px solid #ddd;
   border-radius: 10px;
-  background: #000000;
+  background: #ffffff; /* White background for the form */
   text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for the form */
 }
 
+/* Styling individual form elements */
 form p {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 15px;
-  color: rgb(255, 255, 255);
+  color: #333; /* Darker text color for readability */
 }
 
 form label {
   flex: 1;
   text-align: left;
   font-weight: bold;
+  color: #333; /* Dark text to match the sidebar */
 }
 
 form input,
@@ -35,27 +44,50 @@ form select,
 form textarea {
   flex: 2;
   padding: 8px;
-  border: 1px solid #ffffff;
+  border: 1px solid #ccc; /* Lighter border */
   border-radius: 5px;
   font-size: 1rem;
-  border-color: rgb(255, 255, 255);
-  background-color: #191a24;
-  color: #f4f4f4;
+  border-color: #ddd; /* Lighter border for input fields */
+  background-color: #f9f9f9; /* Light background */
+  color: #333; /* Dark text for inputs */
+  transition: border-color 0.3s ease-in-out; /* Smooth border color transition */
+}
+
+form input:focus,
+form select:focus,
+form textarea:focus {
+  border-color: #007bff; /* Blue border on focus */
+  outline: none; /* Removes default focus outline */
+}
+
+form input[type="submit"] {
+  background-color: #007bff; /* Matching the blue from the sidebar */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+form input[type="submit"]:hover {
+  background-color: #0056b3; /* Darker blue on hover */
 }
 
 /* Style submit button */
 .button.is-primary {
-  background-color: #ffffff;
-  color: rgb(0, 0, 0);
+  background-color: #007bff; /* Blue to match the sidebar */
+  color: #ffffff;
   border: none;
   padding: 10px 15px;
   font-size: 1rem;
   border-radius: 5px;
   cursor: pointer;
-  align-items: center;
-  margin-top: 40px;
+  margin-top: 20px;
+  transition: background-color 0.3s ease-in-out;
 }
 
 .button.is-primary:hover {
-  background-color: #5e5e5e;
+  background-color: #0056b3; /* Darker blue on hover */
 }

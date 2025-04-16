@@ -1,152 +1,19 @@
+{% extends "manage/manage.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Employee Statistics</title>
-    <link rel="stylesheet" href="{% static 'css/employee_stats.css' %}" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap"
-      rel="stylesheet"
-    />
-  </head>
-  <body>
-    <h1>Employee Statistics</h1>
-    <h2 style="text-align: center">Analytics Overview</h2>
-    <canvas id="attendanceChart" height="120"></canvas>
-    <canvas id="salaryChart" height="100"></canvas>
-    <div class="chart-container" style="text-align:center; margin-top: 20px;">
-        <h3>Bonus Distribution</h3>
-        <canvas id="bonusChart" width="400" height="300"></canvas>
+
+{% block head %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static 'css/attendance_stats.css' %}" />
+{% endblock %}
+
+{% block main_content %}
+  <div class="attendance-stats-container">
+    <h1 class="stats-title">Employee Attendance Statistics</h1>
+
+    <!-- Display Matplotlib Chart -->
+    <div class="chart-card">
+      <h3>Employee Attendance Summary</h3>
+      <img src="data:image/png;base64,{{ attendance_chart_image }}" alt="Attendance Chart" />
     </div>
-    
-
-
-    <div class="stats-container">
-        {% for data in employee_data %}
-          <div class="employee-card">
-            <h2>{{ data.employee.first_name }} {{ data.employee.last_name }}</h2>
-            <p><strong>Email:</strong> {{ data.employee.email }}</p>
-            <p><strong>Phone:</strong> {{ data.employee.phone }}</p>
-            <p><strong>Department:</strong> {{ data.employee.department.department_name }}</p>
-            <p><strong>Role:</strong> {{ data.employee.role.role_name }}</p>
-            <p>
-              <strong>Status:</strong> <span class="status-active">{{ data.employee.status }}</span>
-            </p>
-      
-            <div class="attendance-summary">
-              <h4>Attendance Summary</h4>
-              <ul>
-                <li><strong>Present:</strong> {{ data.attendance_summary.present }}</li>
-                <li><strong>Absent:</strong> {{ data.attendance_summary.absent }}</li>
-                <li><strong>On Leave:</strong> {{ data.attendance_summary.on_leave }}</li>
-              </ul>
-            </div>
-      
-            <div class="financial-stats">
-              <p><strong>Latest Salary Month:</strong> {{ data.latest_pay_month }}</p>
-              <p>
-                <strong>Net Salary:</strong>
-                <span class="salary-amount">${{ data.net_salary }}</span>
-              </p>
-              <p>
-                <strong>Total Bonuses:</strong>
-                <span class="bonus-amount">${{ data.bonus_total }}</span>
-              </p>
-            </div>
-          </div>
-        {% endfor %}
-      </div>
-      
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-      const attendanceData = {{ attendance_chart_data|safe }};
-      const salaryData = {{ top_5_salaries|safe }};
-      const bonusData = {{ bonus_chart_data|safe }};
-
-      // Attendance Chart
-      const attendanceChart = document.getElementById('attendanceChart').getContext('2d');
-      new Chart(attendanceChart, {
-          type: 'bar',
-          data: {
-              labels: attendanceData.map(emp => emp.name),
-              datasets: [
-                  {
-                      label: 'Present',
-                      data: attendanceData.map(emp => emp.present),
-                      backgroundColor: '#4caf50'
-                  },
-                  {
-                      label: 'Absent',
-                      data: attendanceData.map(emp => emp.absent),
-                      backgroundColor: '#f44336'
-                  },
-                  {
-                      label: 'On Leave',
-                      data: attendanceData.map(emp => emp.on_leave),
-                      backgroundColor: '#ffc107'
-                  }
-              ]
-          },
-          options: {
-              responsive: true,
-              plugins: {
-                  title: {
-                      display: true,
-                      text: 'Attendance Summary by Employee'
-                  }
-              }
-          }
-      });
-
-      // Salary Chart
-      const salaryChart = document.getElementById('salaryChart').getContext('2d');
-      new Chart(salaryChart, {
-          type: 'bar',
-          data: {
-              labels: salaryData.map(emp => emp.name),
-              datasets: [{
-                  label: 'Net Salary',
-                  data: salaryData.map(emp => emp.salary),
-                  backgroundColor: '#2196f3'
-              }]
-          },
-          options: {
-              responsive: true,
-              plugins: {
-                  title: {
-                      display: true,
-                      text: 'Top 5 Earners'
-                  }
-              }
-          }
-      });
-
-      // Bonus Chart
-      const bonusChart = document.getElementById('bonusChart').getContext('2d');
-      new Chart(bonusChart, {
-          type: 'doughnut',
-          data: {
-              labels: bonusData.map(emp => emp.name),
-              datasets: [{
-                  label: 'Bonuses',
-                  data: bonusData.map(emp => emp.bonus),
-                  backgroundColor: [
-                      '#4caf50', '#2196f3', '#ff9800', '#9c27b0', '#f44336', '#3f51b5'
-                  ]
-              }]
-          },
-          options: {
-              responsive: true,
-              plugins: {
-                  title: {
-                      display: true,
-                      text: 'Bonus Distribution'
-                  }
-              }
-          }
-      });
-      
-    </script>
-  </body>
-</html>
+  </div>
+{% endblock %}

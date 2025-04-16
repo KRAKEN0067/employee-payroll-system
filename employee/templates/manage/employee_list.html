@@ -1,11 +1,12 @@
-{% extends "base.html" %}
+{% extends "manage/manage.html" %}
 {% load static %}
 
 {% block head %}
+{{ block.super }}
 <link rel="stylesheet" href="{% static 'css/employee_list.css' %}">
 {% endblock %}
 
-{% block content %}
+{% block main_content %}
 
 <div class="employee-container">
     <div class="search-bar">

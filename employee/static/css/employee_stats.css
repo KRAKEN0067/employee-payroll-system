@@ -1,44 +1,43 @@
 body {
-    font-family: 'Inter', sans-serif;
-    background: #f4f7fa;
-    padding: 20px;
-}
-
-h1 {
-    text-align: center;
-    color: #333;
-    margin-bottom: 30px;
-}
-
-.stats-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 20px;
-}
-
-.employee-card {
-    background: white;
-    border-radius: 15px;
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
-    transition: transform 0.2s;
-}
-
-.employee-card:hover {
-    transform: scale(1.02);
-}
-
-.employee-card h2 {
-    margin-bottom: 10px;
-    color: #1e2a38;
-}
-
-.employee-card p,
-.employee-card li {
-    margin: 5px 0;
-    color: #444;
-}
-
-.employee-card ul {
-    padding-left: 20px;
-}
+    background-color: #2c2c3c !important;
+    color: #fff !important;
+    font-family: 'Inter', sans-serif !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    line-height: 1.6 !important;
+  }
+  
+  .attendance-stats-container {
+    padding: 30px 20px !important;
+    max-width: 1200px !important;
+    margin: 0 auto !important;
+  }
+  
+  .stats-title {
+    text-align: center !important;
+    font-size: 2.8rem !important;
+    margin-bottom: 40px !important;
+    color: #00bcd4 !important;
+  }
+  
+  .chart-card {
+    background-color: #333 !important;
+    padding: 20px !important;
+    border-radius: 10px !important;
+    margin-top: 40px !important;
+  }
+  
+  .chart-card h3 {
+    font-size: 1.5rem !important;
+    text-align: center !important;
+    margin-bottom: 15px !important;
+    color: #ffc107 !important;
+  }
+  
+  canvas {
+    background-color: #1e1e2f !important;
+    padding: 10px !important;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important;
+  }
+  

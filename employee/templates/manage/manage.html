@@ -1,22 +1,35 @@
-{% extends "base.html" %}
-{% load static %}
-
-{% block head %}
-<link rel="stylesheet" href="{% static 'css/manage.css' %}">
-{% endblock %}
-
-{% block content %}
+{% extends "base.html" %} {% load static %} {% block head %}
+<link rel="stylesheet" href="{% static 'css/manage.css' %}" />
+{% endblock %} {% block content %}
 <div class="manage-container">
-  <h2 class="manage-title">Manage System</h2>
-  <div class="manage-grid">
-    <a href="{% url 'add_employee' %}" class="manage-card">👨‍💼 Add Employee</a>
-    <a href="{% url 'add_department' %}" class="manage-card">🏢 Add Department</a>
-    <a href="{% url 'add_role' %}" class="manage-card">💼 Add Role</a>
-    <a href="{% url 'mark_attendance' %}" class="manage-card">🕒 Mark Attendance</a>
-    <a href="{% url 'add_bonus' %}" class="manage-card">💸 Add Bonus</a>
-    <a href="{% url 'process_payroll' %}" class="manage-card">📊 Process Payroll</a>
-    <a href="{% url 'employee_list' %}" class="manage-card">📋 Employee List</a>
-    <a href="{% url 'employee_stats' %}" class="manage-card">📋 Employee Stats</a>
+  <div class="manage-sidebar">
+    <a href="/manage"> <h2 class="manage-title">Manage System</h2> </a>
+    <div class="manage-links">
+      <a href="{% url 'add_employee' %}" class="manage-link">👨‍💼 Add Employee</a>
+      <a href="{% url 'add_department' %}" class="manage-link"
+        >🏢 Add Department</a
+      >
+      <a href="{% url 'add_role' %}" class="manage-link">💼 Add Role</a>
+      <a href="{% url 'mark_attendance' %}" class="manage-link"
+        >🕒 Mark Attendance</a
+      >
+      <a href="{% url 'add_bonus' %}" class="manage-link">💸 Add Bonus</a>
+      <a href="{% url 'process_payroll' %}" class="manage-link"
+        >📊 Process Payroll</a
+      >
+      <a href="{% url 'employee_list' %}" class="manage-link"
+        >📋 Employee List</a
+      >
+      <a href="{% url 'employee_stats' %}" class="manage-link"
+        >📋 Employee Stats</a
+      >
+    </div>
+  </div>
+
+  <div class="manage-content">
+    {% block main_content %}
+    <!-- This section will be populated dynamically based on the page the user clicks -->
+    {% endblock %}
   </div>
 </div>
 {% endblock %}
