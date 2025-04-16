@@ -169,16 +169,13 @@ import matplotlib.pyplot as plt
 import io
 import base64
 
-
-def employee_stats_view(request):
+def get_employee_data():
     employees = Employee.objects.all()
     employee_data = []
-
     attendance_chart_data = []
     salary_chart_data = []
     bonus_chart_data = []
 
-    # Prepare attendance data and other statistics
     for emp in employees:
         attendance = Attendance.objects.filter(employee=emp)
         attendance_summary = {
@@ -218,7 +215,9 @@ def employee_stats_view(request):
     # Sort salary chart to get top 5 earners
     top_5_salaries = sorted(salary_chart_data, key=lambda x: x['salary'], reverse=True)[:5]
 
-    # Create Matplotlib Attendance Chart
+    return employee_data, attendance_chart_data, salary_chart_data, bonus_chart_data, top_5_salaries
+
+def create_attendance_chart(attendance_chart_data):
     fig, ax = plt.subplots(figsize=(10, 6))
     labels = [f'{emp["name"]}' for emp in attendance_chart_data]
     present = [emp['present'] for emp in attendance_chart_data]
@@ -234,7 +233,6 @@ def employee_stats_view(request):
     ax.set_title('Employee Attendance Summary')
     ax.legend()
 
-    # Convert Matplotlib plot to PNG image and then to base64
     img_buf = io.BytesIO()
     plt.tight_layout()
     plt.savefig(img_buf, format='png')
@@ -242,13 +240,20 @@ def employee_stats_view(request):
     img_str = base64.b64encode(img_buf.getvalue()).decode('utf-8')
     plt.close(fig)
 
-    # Pass chart data and context to the template
+    return img_str
+
+def employee_stats_view(request):
+    employee_data, attendance_chart_data, salary_chart_data, bonus_chart_data, top_5_salaries = get_employee_data()
+
+    # Create Attendance Chart Image
+    attendance_chart_image = create_attendance_chart(attendance_chart_data)
+
     context = {
         'employee_data': employee_data,
         'attendance_chart_data': attendance_chart_data,
         'top_5_salaries': top_5_salaries,
         'bonus_chart_data': bonus_chart_data,
-        'attendance_chart_image': img_str,  # Base64 image for embedding
+        'attendance_chart_image': attendance_chart_image,
     }
 
     return render(request, 'manage/employee_stats.html', context)
