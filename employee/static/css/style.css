@@ -77,31 +77,11 @@ button:hover {
   box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
 }
 
-/* Tables */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 30px 0;
-}
 
-th, td {
-  padding: 12px;
-  text-align: left;
-  color: #f1f1f1;
-  border-bottom: 1px solid #333;
-}
-
-th {
-  background-color: #333;
-}
-
-tr:nth-child(even) {
-  background-color: #2c2c3c;
-}
 
 /* Form Inputs */
 input, select, textarea {
-  background-color: #2c2c3c;
+  background-color: #ffffff;
   color: #f1f1f1;
   border: none;
   padding: 12px;
@@ -113,7 +93,7 @@ input, select, textarea {
 }
 
 input:focus, select:focus, textarea:focus {
-  background-color: #444c5c;
+  
   outline: none;
 }
 

@@ -3,7 +3,18 @@
 {% endblock %} {% block content %}
 <div class="manage-container">
   <div class="manage-sidebar">
-    <a href="/manage"> <h2 class="manage-title">Manage System</h2> </a>
+    <div style="display: flex; justify-content: center; margin: 20px 0">
+      <a href="{% url 'home' %}" class="homeimg">
+        <img
+          src="{% static 'images/home.png' %}"
+          alt="Home"
+          width="30px"
+          height="30px"
+        />
+      </a>
+    </div>
+    <hr />
+    <a href="/manage"> <h3 class="manage-title">Manage System</h3> </a>
     <div class="manage-links">
       <a href="{% url 'add_employee' %}" class="manage-link">👨‍💼 Add Employee</a>
       <a href="{% url 'add_department' %}" class="manage-link"
@@ -28,7 +39,42 @@
 
   <div class="manage-content">
     {% block main_content %}
-    <!-- This section will be populated dynamically based on the page the user clicks -->
+    <div class="dashboard-main">
+      <div class="dashboard-welcome">
+        <h2>Welcome to the Management Dashboard 👋</h2>
+        <p class="subtext">
+          Manage your employees, departments, attendance, and payroll with ease.
+        </p>
+      </div>
+
+      <div class="dashboard-features-grid">
+        <div class="feature-tile">
+          <h3>👨‍💼 Employee Center</h3>
+          <p>Add, edit, or review employee profiles and data.</p>
+        </div>
+        <div class="feature-tile">
+          <h3>🏢 Department & Roles</h3>
+          <p>Organize your teams and manage job roles effortlessly.</p>
+        </div>
+        <div class="feature-tile">
+          <h3>🕒 Attendance Log</h3>
+          <p>Track employee presence and working hours.</p>
+        </div>
+        <div class="feature-tile">
+          <h3>💸 Payroll Hub</h3>
+          <p>Process salaries, bonuses, and deductions with precision.</p>
+        </div>
+      </div>
+
+      <div class="quick-tips">
+        <h4>💡 Quick Tips</h4>
+        <ul>
+          <li>Use the sidebar to quickly access management functions.</li>
+          <li>Regularly update employee attendance for accurate payroll.</li>
+          <li>Check out the “Employee Stats” for visual insights.</li>
+        </ul>
+      </div>
+    </div>
     {% endblock %}
   </div>
 </div>

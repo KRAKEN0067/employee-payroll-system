@@ -60,3 +60,101 @@
 .manage-card:hover {
   background-color: #2980b9;
 }
+.dashboard-welcome {
+  text-align: center;
+  padding: 60px 20px;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.dashboard-welcome h2 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.dashboard-welcome p {
+  font-size: 1.1rem;
+  color: #666;
+}
+
+.dashboard-main {
+  padding: 40px;
+  background-color: #f7faff;
+  border-radius: 12px;
+}
+
+.dashboard-welcome {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.dashboard-welcome h2 {
+  font-size: 2.4rem;
+  color: #2c3e50;
+}
+
+.dashboard-welcome .subtext {
+  font-size: 1.1rem;
+  color: #555;
+  margin-top: 10px;
+}
+
+.dashboard-features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+  margin-top: 20px;
+  margin-bottom: 40px;
+}
+
+.feature-tile {
+  background-color: #ffffff;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.feature-tile h3 {
+  font-size: 1.3rem;
+  color: #2980b9;
+  margin-bottom: 10px;
+}
+
+.feature-tile p {
+  color: #555;
+}
+
+.feature-tile:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+}
+
+.quick-tips {
+  background-color: #eaf4ff;
+  border-left: 6px solid #3498db;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.quick-tips h4 {
+  margin-bottom: 10px;
+  color: #2c3e50;
+}
+
+.quick-tips ul {
+  list-style: disc;
+  padding-left: 20px;
+  color: #444;
+}
+
+.homeimg img {
+  transition: transform 0.3s ease;
+}
+
+.homeimg img:hover {
+  transform: scale(1.1);
+}
