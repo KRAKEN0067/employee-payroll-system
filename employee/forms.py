@@ -41,8 +41,19 @@ class RoleForm(forms.ModelForm):
 class AttendanceForm(forms.ModelForm):
     date = forms.DateField(
         initial=date.today,
-        widget=forms.DateInput(attrs={'type':'date'})
+        widget=forms.DateInput(attrs={'type': 'date'})
     )
+    work_hours = forms.IntegerField(
+        initial=0,
+        min_value=0,
+        widget=forms.NumberInput(attrs={'placeholder': 'Work hours'})
+    )
+    overtime_hours = forms.IntegerField(
+        initial=0,
+        min_value=0,
+        widget=forms.NumberInput(attrs={'placeholder': 'Overtime hours'})
+    )
+
     class Meta:
         model = Attendance
         fields = ['employee', 'date', 'status', 'work_hours', 'overtime_hours']
