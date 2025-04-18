@@ -1,16 +1,26 @@
-{% extends "manage/manage.html" %}
-{% load static %}
-
-{% block head %}
-    {{ block.super }}
-  <link rel="stylesheet" href="{% static 'css/form.css' %}">
-{% endblock %}
-
+{% extends "manage/manage.html" %} 
+{% load static %} 
+{% block head %} 
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'css/form.css' %}" />
+{% endblock %} 
 {% block main_content %}
-  <h2>Add Role</h2>
-  <form method="POST">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit" class="button is-primary">Save</button>
-  </form>
+<h2>Add Role</h2>
+<form method="POST">
+  {% csrf_token %} {{ form.as_p }}
+  <button type="submit" class="button is-primary">Save</button>
+</form>
+<div class="departments-container">
+  <h2>Present Roles:</h2>
+  <div class="departments-grid">
+    {% for r in roles %}
+    <div class="department-card">
+      <h3>{{ r.role_name }}</h3>
+      <p class="dept-code">Department: {{ r.department.department_name }}</p>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+
 {% endblock %}

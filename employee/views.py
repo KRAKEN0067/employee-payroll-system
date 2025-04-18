@@ -91,18 +91,21 @@ def add_employee(request):
     return render(request, 'manage/add_employee.html', {'form': form})
 
 def add_role(request):
-    form = None
+    roles = Role.objects.all()
+    
     if request.method == "POST":
+        form = RoleForm(request.POST)  # ✅ initialize the form with POST data
         if form.is_valid():
             form.save()
             return redirect('add_role')
     else:
-        form = RoleForm()
+        form = RoleForm()  # ✅ initialize an empty form for GET requests
     
-    return render(request, 'manage/add_role.html', {'form':form})
+    return render(request, 'manage/add_role.html', {'form': form, 'roles': roles})
 
 def add_department(request):
     form = None
+    departments = Department.objects.all()
     if request.method == "POST":
         form = DepartmentForm(request.POST)
         if form.is_valid():
@@ -111,7 +114,7 @@ def add_department(request):
     else:
         form = DepartmentForm()
 
-    return render(request, 'manage/add_department.html', {'form': form})
+    return render(request, 'manage/add_department.html', {'form': form, 'departments':departments})
 
 def mark_attendance(request):
     form = None

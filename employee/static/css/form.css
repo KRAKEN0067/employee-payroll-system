@@ -91,3 +91,48 @@ form input[type="submit"]:hover {
 .button.is-primary:hover {
   background-color: #0056b3; /* Darker blue on hover */
 }
+
+.departments-container {
+  padding: 40px;
+  max-width: 1000px;
+  margin: auto;
+  text-align: center;
+}
+
+.departments-container h2 {
+  font-size: 2rem;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.departments-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.department-card {
+  background-color: #f5f8ff;
+  border: 1px solid #d0d8e8;
+  border-radius: 12px;
+  padding: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.department-card h3 {
+  margin-bottom: 10px;
+  color: #2c3e50;
+  font-size: 1.2rem;
+}
+
+.dept-code {
+  color: #555;
+  font-weight: 500;
+}
+
+.department-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: green solid 1px;
+  
+}
