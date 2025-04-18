@@ -25,6 +25,7 @@ body {
 
 .hero-text h1 {
   font-size: 3.5rem;
+  color: black;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 2px;
@@ -50,7 +51,7 @@ body {
 }
 
 .btn-primary:hover {
-  background-color: #00bcd4;  /* Neon blue on hover */
+  background-color: #1e1e2f;  /* Neon blue on hover */
 }
 
 /* Features Section */
@@ -160,7 +161,7 @@ body {
 }
 
 .logout-btn:hover {
-  background-color: #38f15d;
+  background-color: #1e1e2f;
 }
 .logout-div {
   position: absolute;

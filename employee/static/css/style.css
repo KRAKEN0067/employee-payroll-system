@@ -2,7 +2,7 @@
 body {
   background: linear-gradient(135deg, #121212, #2c2c2c);  /* Cool gradient background */
   color: #f5f5f5;
-  margin: 40px;
+  
   font-family: 'Inter', sans-serif;
   font-size: 16px;
   line-height: 1.6;
@@ -118,6 +118,7 @@ footer a {
 footer a:hover {
   color: #00bcd4;
 }
+
 
 /* Media Queries for responsiveness */
 @media (max-width: 768px) {

@@ -14,11 +14,16 @@
 <h1>Employee Statistics</h1>
 <h2 style="text-align: center">Analytics Overview</h2>
 <canvas id="attendanceChart" height="120"></canvas>
+<hr style="color:green">
 <canvas id="salaryChart" height="100"></canvas>
-<div class="chart-container" style="text-align: center; margin-top: 20px">
-  <h3>Bonus Distribution</h3>
-  <canvas id="bonusChart" width="100px" height="100px"></canvas>
+<hr style="color:green">
+<div class="chart-container">
+  <h3 style="color:green">Bonus Distribution</h3>
+  <canvas id="bonusChart"></canvas>
 </div>
+
+<hr style="color:green">
+
 
 <div class="stats-container">
   {% for data in employee_data %}
