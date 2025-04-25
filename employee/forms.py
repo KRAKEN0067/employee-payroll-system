@@ -64,15 +64,13 @@ class SalaryStructureForm(forms.ModelForm):
         fields = [
             'employee',
             'basic_salary',
-            'gross_salary',
             'medical_allowance',
             'travel_allowance',
-            'hra',
+            'hra'
         ]
         widgets = {
             'employee': forms.Select(attrs={'class': 'form-control'}),
             'basic_salary': forms.NumberInput(attrs={'class': 'form-control'}),
-            'gross_salary': forms.NumberInput(attrs={'class': 'form-control'}),
             'medical_allowance': forms.NumberInput(attrs={'class': 'form-control'}),
             'travel_allowance': forms.NumberInput(attrs={'class': 'form-control'}),
             'hra': forms.NumberInput(attrs={'class': 'form-control'}),

@@ -21,7 +21,20 @@ p{
     align-items: center;
     
 }
+#salaryChart {
+    width: 600px !important;
+    height: 300px !important;
+    
+    
+}
+.salary-container{
+    display: flex;
+    justify-content: space-between;
+}
 .attendance-title{
+    margin-left: 680px;
+}
+.salary-title{
     margin-left: 680px;
 }
 .attendance{
@@ -29,3 +42,5 @@ p{
     
     
 }
+
+

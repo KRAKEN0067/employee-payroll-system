@@ -1,5 +1,5 @@
 from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
-from .forms import EmployeeForm, AttendanceForm, BonusForm, PayrollForm, DepartmentForm, RoleForm, DeductionsForm
+from .forms import EmployeeForm, AttendanceForm, BonusForm, PayrollForm, DepartmentForm, RoleForm, DeductionsForm, SalaryStructureForm
 from .models import *
 from django.db.models import Q,Sum,Count
 from django.contrib.auth.decorators import login_required
@@ -282,17 +282,13 @@ def individual_stats(request, employee_id):
     return render(request, 'manage/individual_stats.html', context)
 
 def export_employees_csv(request):
-    # Create the HttpResponse object with CSV headers
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="employee_list.csv"'
 
-    # Create a CSV writer
     writer = csv.writer(response)
 
-    # Write the header row
     writer.writerow(['Employee ID', 'Name', 'Email', 'Phone', 'Department', 'Role', 'Status'])
 
-    # Filter employees based on query parameters
     query = request.GET.get('q', '')
     department = request.GET.get('department')
     role = request.GET.get('role')
@@ -300,7 +296,6 @@ def export_employees_csv(request):
 
     employees = Employee.objects.all()
 
-    # Apply search query
     if query:
         employees = employees.filter(
             Q(first_name__icontains=query) |
@@ -311,25 +306,21 @@ def export_employees_csv(request):
             Q(role_role_name_icontains=query)
         )
 
-    # Apply department filter
     if department:
         try:
             employees = employees.filter(department__pk=int(department))
         except ValueError:
-            pass  # Ignore invalid department filter
+            pass 
 
-    # Apply role filter
     if role:
         try:
             employees = employees.filter(role__pk=int(role))
         except ValueError:
-            pass  # Ignore invalid role filter
+            pass 
 
-    # Apply status filter
     if status:
         employees = employees.filter(status=status)
 
-    # Write employee data rows
     for employee in employees:
         writer.writerow([
             employee.employee_id,
@@ -342,3 +333,14 @@ def export_employees_csv(request):
         ])
 
     return response
+
+def add_salary_structure(request):
+    if request.method == 'POST':
+        form = SalaryStructureForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('add_salary_structure')  # Or wherever you want to go after saving
+    else:
+        form = SalaryStructureForm()
+
+    return render(request, 'manage/add_salary_structure.html', {'form': form})

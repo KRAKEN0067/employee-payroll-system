@@ -48,6 +48,16 @@ class SalaryStructure(models.Model):
     travel_allowance = models.DecimalField(max_digits=10, decimal_places=2)
     hra = models.DecimalField(max_digits=10, decimal_places=2)
 
+    def save(self, *args, **kwargs):
+        # Auto-calculate gross salary before saving
+        self.gross_salary = (
+            self.basic_salary +
+            self.medical_allowance +
+            self.travel_allowance +
+            self.hra
+        )
+        super(SalaryStructure, self).save(*args, **kwargs)
+
     def __str__(self):
         return f"Salary ID: {self.salary_id} - Employee: {self.employee.first_name}"
 

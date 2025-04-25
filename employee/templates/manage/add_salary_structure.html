@@ -1,0 +1,16 @@
+{% extends "manage/manage.html" %}
+{% load static %}
+
+{% block head %}
+    {{ block.super }}
+  <link rel="stylesheet" href="{% static 'css/form.css' %}">
+{% endblock %}
+
+{% block main_content %}
+  <h2>Add Salary Structure</h2>
+  <form method="POST">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="button is-primary">Save</button>
+  </form>
+{% endblock %}

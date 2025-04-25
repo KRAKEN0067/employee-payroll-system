@@ -3,14 +3,10 @@
 {% block head %} 
 {{ block.super }}
 <link rel="stylesheet" href="{% static 'css/individual_stats.css' %}" />
-<link
-  href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap"
-  rel="stylesheet"
-/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
 {% endblock %}
 
 {% block main_content %}
-
 
 <div class="employee-stats">
     <h2>Stats for {{ employee.first_name }} {{ employee.last_name }}</h2>
@@ -31,25 +27,32 @@
             <p>Total Overtime Hours: {{ total_overtime }}</p>
         </div>
         <div>
-            <h3 class="attendance-title">Attendance Pie Chart</h3>
             <canvas id="attendanceChart" width="400" height="400"></canvas>
         </div>
     </div>
-
-
-    
     <hr>
 
-    <h3>Salary Structure</h3>
-    {% if salary %}
-        <p>Basic Salary: ₹{{ salary.basic_salary }}</p>
-        <p>Gross Salary: ₹{{ salary.gross_salary }}</p>
-        <p>Medical Allowance: ₹{{ salary.medical_allowance }}</p>
-        <p>Travel Allowance: ₹{{ salary.travel_allowance }}</p>
-        <p>HRA: ₹{{ salary.hra }}</p>
-    {% else %}
-        <p>No salary structure available.</p>
-    {% endif %}
+    <div class="salary-container">
+        <div class="salary-info">
+            <h3>Salary Structure</h3>
+            {% if salary %}
+                <p>Basic Salary: ₹{{ salary.basic_salary }}</p>
+                <p>Gross Salary: ₹{{ salary.gross_salary }}</p>
+                <p>Medical Allowance: ₹{{ salary.medical_allowance }}</p>
+                <p>Travel Allowance: ₹{{ salary.travel_allowance }}</p>
+                <p>HRA: ₹{{ salary.hra }}</p>
+            {% else %}
+                <p>No salary structure available.</p>
+            {% endif %}
+        </div>
+        {% if salary %}
+        <div class="chart-container">
+            
+            <canvas id="salaryChart"></canvas>
+        </div>
+        {% endif %}
+    </div>
+
     <hr>
 
     <h3>Deductions</h3>
@@ -80,37 +83,74 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    const ctx = document.getElementById('attendanceChart').getContext('2d');
-    const attendanceChart = new Chart(ctx, {
-        type: 'pie',
-        data: {
-            labels: ['Present', 'Absent', 'On Leave'],
-            datasets: [{
-                label: 'Attendance',
-                data: [
-                    {{ attendance_data.Present }},
-                    {{ attendance_data.Absent }},
-                    {{ attendance_data.On_Leave }}
-                ],
-                backgroundColor: ['#4CAF50', '#FF5252', '#FFC107'],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    position: 'bottom',
+    document.addEventListener('DOMContentLoaded', function() {
+        // Pie chart for attendance
+        const attendanceCtx = document.getElementById('attendanceChart').getContext('2d');
+        const attendanceChart = new Chart(attendanceCtx, {
+            type: 'pie',
+            data: {
+                labels: ['Present', 'Absent', 'On Leave'],
+                datasets: [{
+                    label: 'Attendance',
+                    data: [
+                        {{ attendance_data.Present }},
+                        {{ attendance_data.Absent }},
+                        {{ attendance_data.On_Leave }}
+                    ],
+                    backgroundColor: ['#4CAF50', '#FF5252', '#FFC107'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                    }
                 }
             }
-        }
+        });
+
+        // Bar chart for salary structure
+        const salaryCtx = document.getElementById('salaryChart').getContext('2d');
+        const salaryChart = new Chart(salaryCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Basic Salary', 'Medical Allowance', 'Travel Allowance', 'HRA'],
+                datasets: [{
+                    label: 'Amount (₹)',
+                    data: [
+                        {{ salary.basic_salary }},
+                        {{ salary.medical_allowance }},
+                        {{ salary.travel_allowance }},
+                        {{ salary.hra }}
+                    ],
+                    backgroundColor: ['#3498db', '#2ecc71', '#f1c40f', '#e67e22'],
+                    borderRadius: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: ctx => `₹${ctx.raw}`
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: value => `₹${value}`
+                        }
+                    }
+                }
+            }
+        });
     });
 </script>
-
-
 
 {% endblock %}

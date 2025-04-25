@@ -11,6 +11,7 @@ urlpatterns = [
     path('add_role/', add_role, name='add_role'),
     path('mark_attendance/', mark_attendance, name='mark_attendance'),
     path('add_bonus/', add_bonus, name='add_bonus'),
+    path('add_salary_structure/', add_salary_structure, name='add_salary_structure'),
     path('process_payroll', process_payroll, name='process_payroll'),
     path('payroll_info/<int:employee_id>', payroll_info, name='payroll_info'),
     path('employee_list/', employee_list, name='employee_list'),
