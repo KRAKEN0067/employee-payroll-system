@@ -22,9 +22,9 @@
       <div class="payroll-info">
         <h4>{{ payroll.salary_month }}</h4>
         <div class="salary-section">
-          <p><strong>Gross Salary:</strong> ₹{{ payroll.gross_salary }}</p>
-          <p><strong>Net Salary:</strong> ₹{{ payroll.net_salary }}</p>
-          <p><strong>Deductions:</strong> ₹{{ payroll.deductions }}</p>
+          <p><strong>Gross Salary:</strong> ₹{{ gross_salary }}</p>
+          <p><strong>Net Salary:</strong> ₹{{ net_salary }}</p>
+          <p><strong>Deductions:</strong> ₹{{ deductions }}</p>
           <p><strong>Payment Status:</strong> 
             <span class="status {{ payroll.payment_status|lower }}">{{ payroll.payment_status }}</span>
           </p>

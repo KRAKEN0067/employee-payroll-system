@@ -60,18 +60,44 @@
         <p>Tax: ₹{{ deductions.tax }}</p>
         <p>Provident Fund: ₹{{ deductions.provident_fund }}</p>
         <p>Other Deductions: ₹{{ deductions.other_deductions }}</p>
-        <p>Total Deductions: ₹{{ deductions.total_deductions }}</p>
+        <p>Total Deductions: ₹{{ total_deductions }}</p>
     {% else %}
         <p>No deduction data available.</p>
     {% endif %}
     <hr>
 
-    <h3>Payroll Records</h3>
-    {% for payroll in payrolls %}
-        <p>{{ payroll.salary_month }} - Net: ₹{{ payroll.net_salary }} ({{ payroll.payment_status }})</p>
-    {% empty %}
-        <p>No payroll records.</p>
-    {% endfor %}
+    <h3 class="section-title">Payroll Records</h3>
+
+    <h3 class="section-title">Payroll Records</h3>
+
+    <div class="payroll-records">
+        {% if payrolls %}
+            <table class="payroll-table">
+                <thead>
+                    <tr>
+                        <th>Month</th>
+                        <th>Net Salary (₹)</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for payroll in payrolls %}
+                        <tr>
+                            <td class="row-value">{{ payroll.salary_month }}</td>
+                            <td class="row-value">₹{{ net_salary }}</td>
+                            <td class="{% if payroll.payment_status == 'Completed' %}status-completed{% elif payroll.payment_status == 'Pending' %}status-pending{% endif %}">
+                                {{ payroll.payment_status }}
+                            </td>
+                            
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No payroll records available.</p>
+        {% endif %}
+    </div>
+    
     <hr>
 
     <h3>Bonuses</h3>

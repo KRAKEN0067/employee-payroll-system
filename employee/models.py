@@ -68,7 +68,6 @@ class Deductions(models.Model):
     tax = models.DecimalField(max_digits=10, decimal_places=2)
     provident_fund = models.DecimalField(max_digits=10, decimal_places=2)
     other_deductions = models.DecimalField(max_digits=10, decimal_places=2)
-    total_deductions = models.DecimalField(max_digits=10, decimal_places=2)
 
     def __str__(self):
         return f"Deduction ID: {self.deduction_id} - Employee: {self.employee.employee_id}"
@@ -109,10 +108,8 @@ class Payroll(models.Model):
     payroll_id = models.AutoField(primary_key=True)
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
     salary_month = models.CharField(max_length=20)  # Can be 'March 2025'
-    gross_salary = models.DecimalField(max_digits=10, decimal_places=2)
     payment_status = models.CharField(max_length=10, choices=PAYMENT_STATUS_CHOICES)
-    net_salary = models.DecimalField(max_digits=10, decimal_places=2)
-    deductions = models.DecimalField(max_digits=10, decimal_places=2)
+    
 
     def __str__(self):
         return f"Payroll ID: {self.payroll_id} - Employee: {self.employee.first_name}"

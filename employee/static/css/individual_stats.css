@@ -43,4 +43,118 @@ p{
     
 }
 
+.section-title {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #2c3e50;
+}
+
+.payroll-records {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.payroll-card {
+    background: #f8f9fa;
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.payroll-month {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #34495e;
+}
+
+.payroll-details {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.5rem;
+    font-size: 0.95rem;
+}
+
+.net-salary {
+    font-weight: 500;
+    color: #27ae60;
+}
+
+.payment-status {
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.payment-status.paid {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.payment-status.unpaid {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.no-records {
+    color: #888;
+    font-style: italic;
+}
+
+.section-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+
+.payroll-records {
+    margin-top: 15px;
+    overflow-x: auto;
+}
+
+.payroll-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.payroll-table th,
+.payroll-table td {
+    padding: 12px 18px;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+    
+}
+
+.row-value{
+    color: black;
+}
+
+.payroll-table th {
+    background-color: #f5f5f5;
+    color: #333;
+    font-weight: 600;
+}
+
+.payroll-table tr:hover {
+    background-color: #f9f9f9;
+}
+
+.status-completed {
+    color: green;
+    font-weight: bold;
+}
+
+.status-pending {
+    color: red;
+    font-weight: bold;
+}
+
+
 

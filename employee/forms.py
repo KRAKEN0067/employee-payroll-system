@@ -27,17 +27,21 @@ class BonusForm(forms.ModelForm):
         if not self.initial.get('bonus_date'):
             self.initial['bonus_date'] = date.today()
 
-class DeductionsForm(forms.ModelForm):
-    class Meta:
-        model = Deductions
-        fields = ['tax','provident_fund','other_deductions','total_deductions']
 
 
 
 class PayrollForm(forms.ModelForm):
     class Meta:
         model = Payroll
-        fields = ['employee', 'salary_month', 'gross_salary', 'deductions', 'net_salary', 'payment_status']
+        fields = ['employee', 'salary_month', 'payment_status']
+        widgets = {
+            'salary_month': forms.DateInput(attrs={'type': 'month'})
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(PayrollForm, self).__init__(*args, **kwargs)
+        self.fields['salary_month'].initial = date.today().strftime('%Y-%m')  # "2025-04"
+
 
 class DepartmentForm(forms.ModelForm):
     class Meta:
@@ -86,3 +90,11 @@ class SalaryStructureForm(forms.ModelForm):
             'travel_allowance': forms.NumberInput(attrs={'class': 'form-control'}),
             'hra': forms.NumberInput(attrs={'class': 'form-control'}),
         }
+
+
+
+class DeductionsForm(forms.ModelForm):
+    class Meta:
+        model = Deductions
+        fields = ['employee', 'tax', 'provident_fund', 'other_deductions']
+        

@@ -176,18 +176,37 @@ def payroll_info(request, employee_id):
     employee = get_object_or_404(Employee, pk=employee_id)
     payrolls = Payroll.objects.filter(employee=employee)
     salary_structure = SalaryStructure.objects.filter(employee=employee).first()
-    deductions = Deductions.objects.filter(employee=employee).first()
+    deductions = Deductions.objects.filter(employee=employee).first()  # Fetch deductions
     bonuses = Bonus.objects.filter(employee=employee)
+
+    # Calculate gross salary
+    gross_salary = 0
+    if salary_structure:
+        gross_salary = (salary_structure.basic_salary +
+                        salary_structure.hra +
+                        salary_structure.medical_allowance +
+                        salary_structure.travel_allowance)
+
+    
+    total_deductions = 0
+    if deductions:
+        total_deductions = (deductions.tax + deductions.provident_fund +
+                            deductions.other_deductions)
+
+    
+    net_salary = gross_salary - total_deductions
 
     return render(request, 'manage/payroll_info.html', {
         'employee': employee,
         'payrolls': payrolls,
         'salary_structure': salary_structure,
+        'total_deductions':total_deductions,
         'deductions': deductions,
         'bonuses': bonuses,
+        'gross_salary': gross_salary,
+        'net_salary': net_salary,
+        'total_deductions': total_deductions,  
     })
-
-
 
 
 def employee_stats_view(request):
@@ -218,7 +237,7 @@ def employee_stats_view(request):
              'bonus_total': total_bonus,
          })
  
-         # Graph data
+         
          attendance_chart_data.append({
              'name': f'{emp.first_name} {emp.last_name}',
              'present': attendance_summary['present'],
@@ -234,7 +253,7 @@ def employee_stats_view(request):
              'bonus': float(total_bonus),
          })
  
-     # Sort salary chart to get top 5 earners
+     
      top_5_salaries = sorted(salary_chart_data, key=lambda x: x['salary'], reverse=True)[:5]
  
      context = {
@@ -253,22 +272,40 @@ def individual_stats(request, employee_id):
     bonuses = Bonus.objects.filter(employee=employee)
     salary = SalaryStructure.objects.filter(employee=employee).first()
     deductions = Deductions.objects.filter(employee=employee).first()
+    
 
+
+    # Attendance stats
     present_days = attendance_records.filter(status='Present').count()
     absent_days = attendance_records.filter(status='Absent').count()
     leave_days = attendance_records.filter(status='On Leave').count()
     total_work_hours = sum(record.work_hours for record in attendance_records)
     total_overtime = sum(record.overtime_hours for record in attendance_records)
 
+    # Attendance chart data
     attendance_data = {
-    'Present': present_days,
-    'Absent': absent_days,
-    'On_Leave': leave_days,
-}
+        'Present': present_days,
+        'Absent': absent_days,
+        'On_Leave': leave_days,
+    }
+
+    # Deductions
+    total_deductions = 0
+    if deductions:
+        total_deductions = (
+            deductions.tax +
+            deductions.provident_fund +
+            deductions.other_deductions
+        )
+
+    # Net salary (Gross - Deductions)
+    net_salary = 0
+    if salary:
+        net_salary = salary.gross_salary - total_deductions
 
     context = {
         'employee': employee,
-        'attendance_data':attendance_data,
+        'attendance_data': attendance_data,
         'present_days': present_days,
         'absent_days': absent_days,
         'leave_days': leave_days,
@@ -278,8 +315,12 @@ def individual_stats(request, employee_id):
         'bonuses': bonuses,
         'salary': salary,
         'deductions': deductions,
+        'total_deductions': total_deductions,
+        'net_salary': net_salary,
     }
+
     return render(request, 'manage/individual_stats.html', context)
+
 
 def export_employees_csv(request):
     response = HttpResponse(content_type='text/csv')
@@ -339,8 +380,26 @@ def add_salary_structure(request):
         form = SalaryStructureForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('add_salary_structure')  # Or wherever you want to go after saving
+            return redirect('add_salary_structure')   
     else:
         form = SalaryStructureForm()
 
     return render(request, 'manage/add_salary_structure.html', {'form': form})
+
+
+def add_deductions(request):
+    form = None
+    if request.method == "POST":
+        form = DeductionsForm(request.POST)
+        if form.is_valid():
+            deductions = form.save(commit=False)
+            # Calculate total deductions before saving
+            deductions.total_deductions = (
+                deductions.tax + deductions.provident_fund + deductions.other_deductions
+            )
+            deductions.save()
+            return redirect('add_deductions')  
+    else:
+        form = DeductionsForm()
+
+    return render(request, 'manage/add_deductions.html', {'form': form})
