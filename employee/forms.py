@@ -15,6 +15,17 @@ class BonusForm(forms.ModelForm):
     class Meta:
         model = Bonus
         fields = ['employee', 'bonus_amount', 'bonus_date', 'bonus_reason']
+        widgets = {
+            'employee': forms.Select(attrs={'class': 'form-control'}),
+            'bonus_amount': forms.NumberInput(attrs={'class': 'form-control'}),
+            'bonus_date': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+            'bonus_reason': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(BonusForm, self).__init__(*args, **kwargs)
+        if not self.initial.get('bonus_date'):
+            self.initial['bonus_date'] = date.today()
 
 class DeductionsForm(forms.ModelForm):
     class Meta:
