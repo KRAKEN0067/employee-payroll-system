@@ -48,11 +48,16 @@
     </div>
     
     
-
+<!-- Export CSV Button -->
+    <div class="export-csv">
+        <a href="{% url 'export_employees_csv' %}?q={{ request.GET.q }}&department={{ request.GET.department }}&role={{ request.GET.role }}&status={{ request.GET.status }}" class="btn-export">Export CSV</a>
+    </div>
     <div class="employee-table">
+
         <table>
             <thead>
                 <tr>
+                    <th>View</th>
                     <th>ID</th>
                     <th>Name</th>
                     <th>Email</th>
@@ -67,6 +72,7 @@
             <tbody>
                 {% for employee in employees %}
                 <tr>
+                    <td><a href="{% url 'individual_stats' employee.employee_id%}"><img class="view-image "src="{% static 'images/view.webp' %}" alt="" width="30px" height="30px"></a></td>
                     <td>{{ employee.employee_id }}</td>
                     <td>{{ employee.first_name }} {{ employee.last_name }}</td>
                     <td>{{ employee.email }}</td>

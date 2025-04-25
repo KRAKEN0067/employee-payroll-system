@@ -1,0 +1,116 @@
+{% extends "manage/manage.html" %} 
+{% load static %} 
+{% block head %} 
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'css/individual_stats.css' %}" />
+<link
+  href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap"
+  rel="stylesheet"
+/>
+{% endblock %}
+
+{% block main_content %}
+
+
+<div class="employee-stats">
+    <h2>Stats for {{ employee.first_name }} {{ employee.last_name }}</h2>
+    <p><strong>Email:</strong> {{ employee.email }}</p>
+    <p><strong>Phone:</strong> {{ employee.phone }}</p>
+    <p><strong>Status:</strong> {{ employee.status }}</p>
+    <p><strong>Department:</strong> {{ employee.department.department_name }}</p>
+    <p><strong>Role:</strong> {{ employee.role.role_name }}</p>
+    <hr>
+
+    <div class='attendance'>
+        <div>
+            <h3>Attendance</h3>
+            <p>Present Days: {{ present_days }}</p>
+            <p>Absent Days: {{ absent_days }}</p>
+            <p>On Leave: {{ leave_days }}</p>
+            <p>Total Work Hours: {{ total_work_hours }}</p>
+            <p>Total Overtime Hours: {{ total_overtime }}</p>
+        </div>
+        <div>
+            <h3 class="attendance-title">Attendance Pie Chart</h3>
+            <canvas id="attendanceChart" width="400" height="400"></canvas>
+        </div>
+    </div>
+
+
+    
+    <hr>
+
+    <h3>Salary Structure</h3>
+    {% if salary %}
+        <p>Basic Salary: ₹{{ salary.basic_salary }}</p>
+        <p>Gross Salary: ₹{{ salary.gross_salary }}</p>
+        <p>Medical Allowance: ₹{{ salary.medical_allowance }}</p>
+        <p>Travel Allowance: ₹{{ salary.travel_allowance }}</p>
+        <p>HRA: ₹{{ salary.hra }}</p>
+    {% else %}
+        <p>No salary structure available.</p>
+    {% endif %}
+    <hr>
+
+    <h3>Deductions</h3>
+    {% if deductions %}
+        <p>Tax: ₹{{ deductions.tax }}</p>
+        <p>Provident Fund: ₹{{ deductions.provident_fund }}</p>
+        <p>Other Deductions: ₹{{ deductions.other_deductions }}</p>
+        <p>Total Deductions: ₹{{ deductions.total_deductions }}</p>
+    {% else %}
+        <p>No deduction data available.</p>
+    {% endif %}
+    <hr>
+
+    <h3>Payroll Records</h3>
+    {% for payroll in payrolls %}
+        <p>{{ payroll.salary_month }} - Net: ₹{{ payroll.net_salary }} ({{ payroll.payment_status }})</p>
+    {% empty %}
+        <p>No payroll records.</p>
+    {% endfor %}
+    <hr>
+
+    <h3>Bonuses</h3>
+    {% for bonus in bonuses %}
+        <p>Date: {{ bonus.bonus_date }} - ₹{{ bonus.bonus_amount }} - Reason: {{ bonus.bonus_reason }}</p>
+    {% empty %}
+        <p>No bonus records.</p>
+    {% endfor %}
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('attendanceChart').getContext('2d');
+    const attendanceChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: ['Present', 'Absent', 'On Leave'],
+            datasets: [{
+                label: 'Attendance',
+                data: [
+                    {{ attendance_data.Present }},
+                    {{ attendance_data.Absent }},
+                    {{ attendance_data.On_Leave }}
+                ],
+                backgroundColor: ['#4CAF50', '#FF5252', '#FFC107'],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                }
+            }
+        }
+    });
+</script>
+
+
+
+{% endblock %}

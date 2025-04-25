@@ -1,5 +1,5 @@
 from django import forms
-from .models import Employee, Attendance, Bonus, Payroll, Department, Role, Deductions
+from .models import Employee, Attendance, Bonus, Payroll, Department, Role, Deductions, SalaryStructure
 from datetime import date
 
 class EmployeeForm(forms.ModelForm):
@@ -57,3 +57,23 @@ class AttendanceForm(forms.ModelForm):
     class Meta:
         model = Attendance
         fields = ['employee', 'date', 'status', 'work_hours', 'overtime_hours']
+
+class SalaryStructureForm(forms.ModelForm):
+    class Meta:
+        model = SalaryStructure
+        fields = [
+            'employee',
+            'basic_salary',
+            'gross_salary',
+            'medical_allowance',
+            'travel_allowance',
+            'hra',
+        ]
+        widgets = {
+            'employee': forms.Select(attrs={'class': 'form-control'}),
+            'basic_salary': forms.NumberInput(attrs={'class': 'form-control'}),
+            'gross_salary': forms.NumberInput(attrs={'class': 'form-control'}),
+            'medical_allowance': forms.NumberInput(attrs={'class': 'form-control'}),
+            'travel_allowance': forms.NumberInput(attrs={'class': 'form-control'}),
+            'hra': forms.NumberInput(attrs={'class': 'form-control'}),
+        }

@@ -7,6 +7,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 import calendar
 from datetime import datetime, date
+import csv
 
 def register(request):
     if request.method == 'POST':
@@ -244,3 +245,100 @@ def employee_stats_view(request):
      }
  
      return render(request, 'manage/employee_stats.html', context)
+
+def individual_stats(request, employee_id):
+    employee = get_object_or_404(Employee, pk=employee_id)
+    attendance_records = Attendance.objects.filter(employee=employee)
+    payrolls = Payroll.objects.filter(employee=employee)
+    bonuses = Bonus.objects.filter(employee=employee)
+    salary = SalaryStructure.objects.filter(employee=employee).first()
+    deductions = Deductions.objects.filter(employee=employee).first()
+
+    present_days = attendance_records.filter(status='Present').count()
+    absent_days = attendance_records.filter(status='Absent').count()
+    leave_days = attendance_records.filter(status='On Leave').count()
+    total_work_hours = sum(record.work_hours for record in attendance_records)
+    total_overtime = sum(record.overtime_hours for record in attendance_records)
+
+    attendance_data = {
+    'Present': present_days,
+    'Absent': absent_days,
+    'On_Leave': leave_days,
+}
+
+    context = {
+        'employee': employee,
+        'attendance_data':attendance_data,
+        'present_days': present_days,
+        'absent_days': absent_days,
+        'leave_days': leave_days,
+        'total_work_hours': total_work_hours,
+        'total_overtime': total_overtime,
+        'payrolls': payrolls,
+        'bonuses': bonuses,
+        'salary': salary,
+        'deductions': deductions,
+    }
+    return render(request, 'manage/individual_stats.html', context)
+
+def export_employees_csv(request):
+    # Create the HttpResponse object with CSV headers
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="employee_list.csv"'
+
+    # Create a CSV writer
+    writer = csv.writer(response)
+
+    # Write the header row
+    writer.writerow(['Employee ID', 'Name', 'Email', 'Phone', 'Department', 'Role', 'Status'])
+
+    # Filter employees based on query parameters
+    query = request.GET.get('q', '')
+    department = request.GET.get('department')
+    role = request.GET.get('role')
+    status = request.GET.get('status')
+
+    employees = Employee.objects.all()
+
+    # Apply search query
+    if query:
+        employees = employees.filter(
+            Q(first_name__icontains=query) |
+            Q(last_name__icontains=query) |
+            Q(email__icontains=query) |
+            Q(phone__icontains=query) |
+            Q(department_department_name_icontains=query) |
+            Q(role_role_name_icontains=query)
+        )
+
+    # Apply department filter
+    if department:
+        try:
+            employees = employees.filter(department__pk=int(department))
+        except ValueError:
+            pass  # Ignore invalid department filter
+
+    # Apply role filter
+    if role:
+        try:
+            employees = employees.filter(role__pk=int(role))
+        except ValueError:
+            pass  # Ignore invalid role filter
+
+    # Apply status filter
+    if status:
+        employees = employees.filter(status=status)
+
+    # Write employee data rows
+    for employee in employees:
+        writer.writerow([
+            employee.employee_id,
+            f"{employee.first_name} {employee.last_name}",
+            employee.email,
+            employee.phone,
+            employee.department.department_name if employee.department else '',
+            employee.role.role_name if employee.role else '',
+            employee.status
+        ])
+
+    return response

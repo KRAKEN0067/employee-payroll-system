@@ -14,7 +14,9 @@ urlpatterns = [
     path('process_payroll', process_payroll, name='process_payroll'),
     path('payroll_info/<int:employee_id>', payroll_info, name='payroll_info'),
     path('employee_list/', employee_list, name='employee_list'),
+    path('export-employees/', export_employees_csv, name='export_employees_csv'),
     path('edit_employee/<int:employee_id>/', edit_employee, name='edit_employee'),
+    path('individual_stats/<int:employee_id>/', individual_stats, name='individual_stats'),
     path('delete_employee/<int:employee_id>/', delete_employee, name='delete_employee'),
     path('manage/', manage, name='manage'),
 

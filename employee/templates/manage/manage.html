@@ -1,6 +1,12 @@
-{% extends "base.html" %} {% load static %} {% block head %}
+{% extends "base.html" %} 
+{% load static %} 
+{% block head %}
 <link rel="stylesheet" href="{% static 'css/manage.css' %}" />
-{% endblock %} {% block content %}
+{% endblock %} 
+{% block content %}
+
+{% include "navbar.html" %}
+
 <div class="manage-container">
   <div class="manage-sidebar">
     <div style="display: flex; justify-content: center; margin: 20px 0">

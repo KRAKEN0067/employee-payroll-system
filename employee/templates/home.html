@@ -7,21 +7,8 @@
 
 {% block content %}
 
-
-
-
 <header class="home-hero">
-  <nav class="navbar">
-    <!-- Other nav links here -->
-    {% if user.is_authenticated %}
-    <div class="logout-div">
-      <form method="post" action="{% url 'logout' %}">
-        {% csrf_token %}
-        <button type="submit" class="logout-btn">Logout</button>
-      </form>
-    </div>
-    {% endif %}
-  </nav>
+  {% include "navbar.html" %}
   
   <div class="hero-text">
     <h1>Welcome to Your HR & Payroll System</h1>
